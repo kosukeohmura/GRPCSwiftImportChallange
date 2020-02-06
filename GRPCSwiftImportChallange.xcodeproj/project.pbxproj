@@ -6,25 +6,11 @@
 	objectVersion = 52;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		5C96501023E42ED7001839D3 /* GRPCSwiftImportChallangeUniversal */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 5C96501123E42ED7001839D3 /* Build configuration list for PBXAggregateTarget "GRPCSwiftImportChallangeUniversal" */;
-			buildPhases = (
-				5C96501423E42EDD001839D3 /* Build Universal Framework */,
-			);
-			dependencies = (
-			);
-			name = GRPCSwiftImportChallangeUniversal;
-			productName = GRPCSwiftImportChallangeUniversal;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
+		5C82EB9A23EAD289009604DA /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = 5C82EB9923EAD289009604DA /* GRPC */; };
 		5C964FFB23E42C7F001839D3 /* GRPCSwiftImportChallange.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C964FF123E42C7F001839D3 /* GRPCSwiftImportChallange.framework */; };
 		5C96500023E42C7F001839D3 /* GRPCSwiftImportChallangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C964FFF23E42C7F001839D3 /* GRPCSwiftImportChallangeTests.swift */; };
 		5C96500223E42C7F001839D3 /* GRPCSwiftImportChallange.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C964FF423E42C7F001839D3 /* GRPCSwiftImportChallange.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5C96500D23E42CD6001839D3 /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = 5C96500C23E42CD6001839D3 /* GRPC */; };
 		5C96500F23E42CEB001839D3 /* HelloWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C96500E23E42CEB001839D3 /* HelloWorld.swift */; };
 /* End PBXBuildFile section */
 
@@ -53,7 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C96500D23E42CD6001839D3 /* GRPC in Frameworks */,
+				5C82EB9A23EAD289009604DA /* GRPC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +120,7 @@
 			);
 			name = GRPCSwiftImportChallange;
 			packageProductDependencies = (
-				5C96500C23E42CD6001839D3 /* GRPC */,
+				5C82EB9923EAD289009604DA /* GRPC */,
 			);
 			productName = GRPCSwiftImportChallange;
 			productReference = 5C964FF123E42C7F001839D3 /* GRPCSwiftImportChallange.framework */;
@@ -175,9 +161,6 @@
 					5C964FF923E42C7F001839D3 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
-					5C96501023E42ED7001839D3 = {
-						CreatedOnToolsVersion = 11.3.1;
-					};
 				};
 			};
 			buildConfigurationList = 5C964FEB23E42C7F001839D3 /* Build configuration list for PBXProject "GRPCSwiftImportChallange" */;
@@ -190,7 +173,7 @@
 			);
 			mainGroup = 5C964FE723E42C7F001839D3;
 			packageReferences = (
-				5C96500B23E42CD6001839D3 /* XCRemoteSwiftPackageReference "grpc-swift" */,
+				5C82EB9823EAD289009604DA /* XCRemoteSwiftPackageReference "grpc-swift" */,
 			);
 			productRefGroup = 5C964FF223E42C7F001839D3 /* Products */;
 			projectDirPath = "";
@@ -198,7 +181,6 @@
 			targets = (
 				5C964FF023E42C7F001839D3 /* GRPCSwiftImportChallange */,
 				5C964FF923E42C7F001839D3 /* GRPCSwiftImportChallangeTests */,
-				5C96501023E42ED7001839D3 /* GRPCSwiftImportChallangeUniversal */,
 			);
 		};
 /* End PBXProject section */
@@ -219,27 +201,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		5C96501423E42EDD001839D3 /* Build Universal Framework */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Build Universal Framework";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n# copied from https://gist.github.com/cromandini/1a9c4aeab27ca84f5d79#file-universal-framework-sh\n\nset -e\n\nUNIVERSAL_OUTPUTFOLDER=${BUILD_DIR}/${CONFIGURATION}-universal\n\n# make sure the output directory exists\nmkdir -p \"${UNIVERSAL_OUTPUTFOLDER}\"\n\n# Step 1. Build Device and Simulator versions\nxcodebuild -target \"${PROJECT_NAME}\" -configuration ${CONFIGURATION} -sdk iphoneos ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\nxcodebuild -target \"${PROJECT_NAME}\" -configuration ${CONFIGURATION} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" clean build\n\n# Step 2. Copy the framework structure (from iphoneos build) to the universal folder\ncp -R \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework\" \"${UNIVERSAL_OUTPUTFOLDER}/\"\n\n# Step 3. Copy Swift modules from iphonesimulator build (if it exists) to the copied framework directory\nSIMULATOR_SWIFT_MODULES_DIR=\"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule/.\"\nif [ -d \"${SIMULATOR_SWIFT_MODULES_DIR}\" ]; then\ncp -R \"${SIMULATOR_SWIFT_MODULES_DIR}\" \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/Modules/${PROJECT_NAME}.swiftmodule\"\nfi\n\n# Step 4. Create universal binary file using lipo and place the combined executable in the copied framework directory\nlipo -create -output \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphonesimulator/${PROJECT_NAME}.framework/${PROJECT_NAME}\" \"${BUILD_DIR}/${CONFIGURATION}-iphoneos/${PROJECT_NAME}.framework/${PROJECT_NAME}\"\n\n# Step 5. Convenience step to copy the framework to the project's directory\ncp -R \"${UNIVERSAL_OUTPUTFOLDER}/${PROJECT_NAME}.framework\" \"${PROJECT_DIR}\"\n\n# Step 6. Convenience step to open the project's directory in Finder\nopen \"${PROJECT_DIR}\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5C964FED23E42C7F001839D3 /* Sources */ = {
@@ -392,6 +353,7 @@
 		5C96500623E42C7F001839D3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -417,6 +379,7 @@
 		5C96500723E42C7F001839D3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
@@ -474,22 +437,6 @@
 			};
 			name = Release;
 		};
-		5C96501223E42ED7001839D3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		5C96501323E42ED7001839D3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -520,21 +467,12 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5C96501123E42ED7001839D3 /* Build configuration list for PBXAggregateTarget "GRPCSwiftImportChallangeUniversal" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5C96501223E42ED7001839D3 /* Debug */,
-				5C96501323E42ED7001839D3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5C96500B23E42CD6001839D3 /* XCRemoteSwiftPackageReference "grpc-swift" */ = {
+		5C82EB9823EAD289009604DA /* XCRemoteSwiftPackageReference "grpc-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:grpc/grpc-swift.git";
+			repositoryURL = "https://github.com/grpc/grpc-swift";
 			requirement = {
 				branch = nio;
 				kind = branch;
@@ -543,9 +481,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		5C96500C23E42CD6001839D3 /* GRPC */ = {
+		5C82EB9923EAD289009604DA /* GRPC */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5C96500B23E42CD6001839D3 /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			package = 5C82EB9823EAD289009604DA /* XCRemoteSwiftPackageReference "grpc-swift" */;
 			productName = GRPC;
 		};
 /* End XCSwiftPackageProductDependency section */
