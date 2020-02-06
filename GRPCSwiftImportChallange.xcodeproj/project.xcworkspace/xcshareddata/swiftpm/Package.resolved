@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "GRPC",
-        "repositoryURL": "git@github.com:grpc/grpc-swift.git",
+        "repositoryURL": "https://github.com/grpc/grpc-swift",
         "state": {
           "branch": "nio",
-          "revision": "5f40a43567495b534dd445e6dd60181dff5a28d6",
+          "revision": "86c421efdcc5a5ff27c33ed9ca887d748ac5482d",
           "version": null
         }
       },
